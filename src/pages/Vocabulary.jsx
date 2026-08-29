@@ -69,7 +69,7 @@ export default function Vocabulary() {
           </span>
           <button
             type="button"
-            className="btn"
+            className="btn btn-primary"
             disabled={safePage >= pageCount - 1}
             onClick={() => setPage(safePage + 1)}
           >

@@ -174,6 +174,13 @@ export default function Speaking() {
                 <strong>{result.expected}</strong>
               </div>
               <div className="result-actions">
+                <button
+                  type="button"
+                  className="btn"
+                  onClick={() => speak(current.hanzi)}
+                >
+                  🔊 Nghe lại
+                </button>
                 <button type="button" className="btn" onClick={startListen}>
                   🔁 Nói lại
                 </button>
