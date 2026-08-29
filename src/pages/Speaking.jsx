@@ -75,10 +75,10 @@ export default function Speaking() {
     if (micOk) start()
   }
 
-  // Dừng nói: dừng nhận dạng (kết quả về qua onResult) + dừng thu âm
+  // Dừng nói: dừng thu âm trước, rồi dừng nhận dạng
   const stopListening = () => {
-    stop()
     recorder.stop()
+    stop()
   }
 
   const toggleMode = (m) => {

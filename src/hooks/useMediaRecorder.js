@@ -49,8 +49,9 @@ export function useMediaRecorder() {
   }, [supported])
 
   const stop = useCallback(() => {
-    recorderRef.current?.stop()
+    const rec = recorderRef.current
     recorderRef.current = null
+    if (rec && rec.state !== 'inactive') rec.stop()
     setRecording(false)
   }, [])
 
