@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 // Nhận dạng giọng nói qua Web Speech API (SpeechRecognition).
 // Chạy trên Chrome/Edge; trả về transcript (chữ Hán) khi có kết quả.
-export function useSpeechRecognition({ lang = 'zh-CN', onResult } = {}) {
+export function useSpeechRecognition({ lang = 'zh-CN', onResult, onEnd } = {}) {
   const [supported] = useState(
     () => 'SpeechRecognition' in window || 'webkitSpeechRecognition' in window,
   )
@@ -19,7 +19,10 @@ export function useSpeechRecognition({ lang = 'zh-CN', onResult } = {}) {
     rec.maxAlternatives = 3
     rec.continuous = false
     rec.onstart = () => setListening(true)
-    rec.onend = () => setListening(false)
+    rec.onend = () => {
+      setListening(false)
+      onEnd?.()
+    }
     rec.onerror = (e) => setError(e.error)
     rec.onresult = (e) => {
       const results = []
@@ -41,7 +44,7 @@ export function useSpeechRecognition({ lang = 'zh-CN', onResult } = {}) {
         // bỏ qua
       }
     }
-  }, [supported, lang, onResult])
+  }, [supported, lang, onResult, onEnd])
 
   const start = useCallback(() => {
     setError(null)

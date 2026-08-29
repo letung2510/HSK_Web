@@ -3,6 +3,7 @@ import vocabulary from '../data/vocabulary.json'
 import LevelTabs from '../components/LevelTabs'
 import { useSpeech } from '../hooks/useSpeech'
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
+import { useMediaRecorder } from '../hooks/useMediaRecorder'
 import { compareSpeech } from '../utils/compareSpeech'
 import { sample } from '../utils/shuffle'
 
@@ -22,6 +23,8 @@ export default function Speaking() {
   const [correctCount, setCorrectCount] = useState(0)
 
   const { supported: speechOk, speak } = useSpeech()
+  const recorder = useMediaRecorder()
+
   const onResult = useCallback(
     (results) => {
       if (!current) return
@@ -36,6 +39,7 @@ export default function Speaking() {
   const { supported: recOk, listening, error, start, stop } = useSpeechRecognition({
     lang: 'zh-CN',
     onResult,
+    onEnd: () => recorder.stop(),
   })
 
   const levelCounts = useMemo(() => {
@@ -49,11 +53,13 @@ export default function Speaking() {
     const w = sample(pool, 1)[0]
     setCurrent({ type: 'word', hanzi: w.hanzi, pinyin: w.pinyin, vi: w.meaningVi })
     setResult(null)
+    recorder.clear()
   }
 
   const pickPhrase = () => {
     setCurrent({ type: 'phrase', hanzi: sample(DEFAULT_PACK, 1)[0] })
     setResult(null)
+    recorder.clear()
   }
 
   const next = () => {
@@ -61,23 +67,34 @@ export default function Speaking() {
     else pickPhrase()
   }
 
+  // Bắt đầu nói: vừa thu âm mic vừa nhận dạng giọng nói
   const startListen = () => {
     setResult(null)
+    recorder.clear()
+    recorder.start()
     start()
+  }
+
+  // Dừng nói: dừng nhận dạng (kết quả về qua onResult) + dừng thu âm
+  const stopListening = () => {
+    stop()
+    recorder.stop()
   }
 
   const toggleMode = (m) => {
     setMode(m)
     setCurrent(null)
     setResult(null)
+    recorder.clear()
   }
 
   return (
     <div className="page speaking-page">
       <h2>🎤 Luyện nói</h2>
       <p className="speaking-intro">
-        Nghe từ chuẩn, bấm nút 🎤 và đọc theo — ứng dụng sẽ nhận dạng và chấm điểm
-        phát âm của bạn. (Hoạt động trên Chrome/Edge, cần quyền sử dụng micro.)
+        Nghe từ chuẩn, bấm nút 🎤 và đọc theo — ứng dụng sẽ nhận dạng, chấm điểm phát
+        âm và thu lại giọng của bạn để nghe lại. (Chạy trên Chrome/Edge, cần quyền
+        micro.)
       </p>
 
       <div className="filter-row">
@@ -105,6 +122,7 @@ export default function Speaking() {
             setLevel(l)
             setCurrent(null)
             setResult(null)
+            recorder.clear()
           }}
           counts={levelCounts}
         />
@@ -150,7 +168,7 @@ export default function Speaking() {
                 <button
                   type="button"
                   className={`btn btn-mic ${listening ? 'listening' : ''}`}
-                  onClick={listening ? stop : startListen}
+                  onClick={listening ? stopListening : startListen}
                   disabled={!recOk}
                 >
                   {listening ? '⏹ Đang nghe…' : '🎤 Bắt đầu nói'}
@@ -174,12 +192,24 @@ export default function Speaking() {
                 <strong>{result.expected}</strong>
               </div>
               <div className="result-actions">
+                {recorder.audioUrl && (
+                  <button
+                    type="button"
+                    className="btn btn-playback"
+                    onClick={() => {
+                      const audio = new Audio(recorder.audioUrl)
+                      audio.play()
+                    }}
+                  >
+                    🎙️ Nghe phát âm của bạn
+                  </button>
+                )}
                 <button
                   type="button"
                   className="btn"
                   onClick={() => speak(current.hanzi)}
                 >
-                  🔊 Nghe lại
+                  🔊 Nghe mẫu
                 </button>
                 <button type="button" className="btn" onClick={startListen}>
                   🔁 Nói lại

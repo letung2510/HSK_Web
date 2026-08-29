@@ -955,6 +955,23 @@ body {
   flex-wrap: wrap;
 }
 
+.btn-playback {
+  background: #1a7f37;
+  border-color: #1a7f37;
+  color: #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+  .btn-playback {
+    background: #3fb950;
+    border-color: #3fb950;
+  }
+}
+
+.btn-playback:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
 .speaking-stats {
   display: flex;
   gap: 20px;
