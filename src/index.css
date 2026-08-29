@@ -815,6 +815,153 @@ body {
   font-style: italic;
 }
 
+/* ===== Speaking ===== */
+.speaking-page {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.speaking-intro {
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.speaking-session {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.speaking-card {
+  padding: 28px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.speaking-hanzi {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.speaking-pinyin {
+  color: var(--primary);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+.speaking-vi {
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.speaking-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.btn-mic {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  font-size: 1.05rem;
+  padding: 12px 22px;
+}
+
+.btn-mic.listening {
+  background: var(--wrong);
+  border-color: var(--wrong);
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+.listening-hint {
+  margin-top: 12px;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.speaking-error {
+  margin-top: 12px;
+  color: var(--wrong);
+}
+
+.speaking-result {
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  text-align: center;
+  background: var(--surface);
+}
+
+.speaking-result.perfect {
+  border-color: var(--correct);
+  background: var(--correct-bg);
+}
+
+.speaking-result.close {
+  border-color: #d29922;
+  background: #fff8e6;
+}
+
+@media (prefers-color-scheme: dark) {
+  .speaking-result.close {
+    background: #2d2613;
+  }
+}
+
+.speaking-result.wrong {
+  border-color: var(--wrong);
+  background: var(--wrong-bg);
+}
+
+.result-score {
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.result-message {
+  font-size: 1.05rem;
+  margin: 4px 0 10px;
+}
+
+.result-detail {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.result-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.speaking-stats {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 720px) {
   .grammar-layout {

@@ -8,6 +8,7 @@ Website học tiếng Trung **100% miễn phí, tĩnh** (không cần server) d�
 - **Ngữ pháp**: 70 chủ điểm HSK 1-4, giải thích tiếng Việt kèm ví dụ có pinyin + phát âm
 - **Flashcard**: ôn tập lật thẻ, tự lưu tiến độ trên trình duyệt (localStorage)
 - **Quiz**: trắc nghiệm 4 dạng câu hỏi, chấm điểm, xem lại đáp án, lưu điểm cao
+- **Luyện nói**: đọc theo từ mẫu, nhận dạng giọng nói (Web Speech API) và chấm điểm phát âm
 - **Phát âm**: Web Speech API — chạy ngay trong trình duyệt, không cần API key
 
 ## Công nghệ

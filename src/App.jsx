@@ -4,6 +4,7 @@ import Vocabulary from './pages/Vocabulary'
 import Grammar from './pages/Grammar'
 import Flashcard from './pages/Flashcard'
 import Quiz from './pages/Quiz'
+import Speaking from './pages/Speaking'
 
 function Layout() {
   return (
@@ -26,6 +27,9 @@ function Layout() {
           <NavLink to="/quiz" className={({ isActive }) => (isActive ? 'active' : '')}>
             Quiz
           </NavLink>
+          <NavLink to="/speaking" className={({ isActive }) => (isActive ? 'active' : '')}>
+            Luyện nói
+          </NavLink>
         </nav>
       </header>
       <main className="site-main">
@@ -35,6 +39,7 @@ function Layout() {
           <Route path="/grammar" element={<Grammar />} />
           <Route path="/flashcard" element={<Flashcard />} />
           <Route path="/quiz" element={<Quiz />} />
+          <Route path="/speaking" element={<Speaking />} />
         </Routes>
       </main>
       <footer className="site-footer">

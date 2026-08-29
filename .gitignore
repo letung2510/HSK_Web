@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Dữ liệu nguồn lớn (9.7MB) — chỉ dùng để tái sinh vocabulary.json, không deploy
+public/scripts/complete.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

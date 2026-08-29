@@ -28,6 +28,9 @@ export default function Home() {
           <Link to="/vocabulary" className="btn btn-primary">
             Học từ vựng
           </Link>
+          <Link to="/speaking" className="btn btn-primary">
+            🎤 Luyện nói
+          </Link>
           <Link to="/grammar" className="btn">
             Ngữ pháp
           </Link>
@@ -56,6 +59,10 @@ export default function Home() {
         <div className="feature-card">
           <h3>✅ Quiz</h3>
           <p>Trắc nghiệm 4 dạng câu hỏi, chấm điểm và xem lại đáp án.</p>
+        </div>
+        <div className="feature-card">
+          <h3>🎤 Luyện nói</h3>
+          <p>Đọc theo từ mẫu, nhận dạng giọng nói và chấm điểm phát âm.</p>
         </div>
         <div className="feature-card">
           <h3>📚 Ngữ pháp</h3>
