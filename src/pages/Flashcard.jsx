@@ -4,6 +4,7 @@ import LevelTabs from '../components/LevelTabs'
 import AudioButton from '../components/AudioButton'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { shuffle } from '../utils/shuffle'
+import { HSK_LEVELS } from '../utils/levels'
 
 export default function Flashcard() {
   const [level, setLevel] = useState(1)
@@ -47,7 +48,7 @@ export default function Flashcard() {
     <div className="page flashcard-page">
       <h2>Flashcard</h2>
       <LevelTabs
-        levels={[1, 2, 3, 4]}
+        levels={HSK_LEVELS}
         active={level}
         onChange={(l) => setLevel(l)}
         counts={levelCounts}

@@ -1,10 +1,10 @@
 # 中文 HSK Việt — Học tiếng Trung miễn phí
 
-Website học tiếng Trung **100% miễn phí, tĩnh** (không cần server) dành cho người Việt, bám sát chương trình **HSK 1-4 (chuẩn HSK 2.0)**.
+Website học tiếng Trung **100% miễn phí, tĩnh** (không cần server) dành cho người Việt, bám sát chương trình **HSK 3.0 (2026, cấp 1-9)**.
 
 ## Tính năng
 
-- **Từ vựng**: 1193 từ HSK 1-4, nghĩa tiếng Việt, pinyin, từ loại, tìm kiếm nhanh, phát âm
+- **Từ vựng**: 11.105 từ HSK 3.0 (1-9), nghĩa tiếng Việt/Anh, pinyin, từ loại, tìm kiếm nhanh, phát âm
 - **Ngữ pháp**: 70 chủ điểm HSK 1-4, giải thích tiếng Việt kèm ví dụ có pinyin + phát âm
 - **Flashcard**: ôn tập lật thẻ, tự lưu tiến độ trên trình duyệt (localStorage)
 - **Quiz**: trắc nghiệm 4 dạng câu hỏi, chấm điểm, xem lại đáp án, lưu điểm cao
@@ -37,6 +37,6 @@ npm run deploy              # build + push lên GitHub Pages
 
 ## Nguồn dữ liệu & bản quyền
 
-- **Từ vựng HSK 2.0**: repo nguồn mở [drkameleon/complete-hsk-vocabulary](https://github.com/drkameleon/complete-hsk-vocabulary) (MIT license); nghĩa tiếng Anh gốc từ **CC-CEDICT**.
-- **Nghĩa tiếng Việt**: tự dịch, rà soát thủ công.
+- **Từ vựng HSK 3.0 (2026)**: repo nguồn mở [Punpuf/hsk-syllabus-vocabulary-parser](https://github.com/Punpuf/hsk-syllabus-vocabulary-parser) (MIT license) — trích xuất từ giáo trình chính thức, nghĩa tiếng Anh gốc từ **CC-CEDICT** (CC BY-SA 4.0).
+- **Nghĩa tiếng Việt**: kế thừa bản dịch HSK 2.0 cũ cho các từ trùng; từ mới hiển thị nghĩa tiếng Anh.
 - **Ngữ pháp**: tự biên soạn.

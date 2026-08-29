@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import vocabulary from '../data/vocabulary.json'
 import LevelTabs from '../components/LevelTabs'
 import { useSpeech } from '../hooks/useSpeech'
@@ -6,6 +6,7 @@ import { useSpeechRecognition } from '../hooks/useSpeechRecognition'
 import { useMediaRecorder } from '../hooks/useMediaRecorder'
 import { compareSpeech } from '../utils/compareSpeech'
 import { sample } from '../utils/shuffle'
+import { HSK_LEVELS } from '../utils/levels'
 
 const DEFAULT_PACK = [
   '你好', '谢谢', '再见', '对不起', '没关系', '我爱你',
@@ -25,22 +26,31 @@ export default function Speaking() {
   const { supported: speechOk, speak } = useSpeech()
   const recorder = useMediaRecorder()
 
-  const onResult = useCallback(
-    (results) => {
-      if (!current) return
-      const best = results[0]
-      const r = compareSpeech(best, current.hanzi)
-      setResult({ ...r, alternatives: results })
-      setAttempts((a) => a + 1)
-      if (r.level === 'perfect') setCorrectCount((c) => c + 1)
-    },
-    [current],
-  )
   const { supported: recOk, listening, error, start, stop } = useSpeechRecognition({
     lang: 'zh-CN',
-    onResult,
-    onEnd: () => recorder.stop(),
+    onEnd: (results) => {
+      // Chấm điểm với transcript cuối cùng có được trong phiên
+      const best = results?.[0]
+      const r = best ? compareSpeech(best, current.hanzi) : null
+      setResult(r ? { ...r, alternatives: results } : { score: 0, level: 'none', message: 'Chưa nghe thấy gì' })
+      setAttempts((a) => a + 1)
+      if (r?.level === 'perfect') setCorrectCount((c) => c + 1)
+      recorder.stop()
+    },
   })
+
+  // Bắt đầu nói: thu âm mic + nhận dạng giọng nói chạy song song.
+  const startListen = async () => {
+    setResult(null)
+    recorder.clear()
+    const micOk = await recorder.start()
+    if (micOk) start()
+  }
+
+  // Dừng nói: dừng nhận dạng — onEnd sẽ chấm điểm và dừng thu âm.
+  const stopListening = () => {
+    stop()
+  }
 
   const levelCounts = useMemo(() => {
     const counts = {}
@@ -65,20 +75,6 @@ export default function Speaking() {
   const next = () => {
     if (mode === 'word') pickWord()
     else pickPhrase()
-  }
-
-  // Bắt đầu nói: thu âm mic trước, sau đó mới nhận dạng giọng nói
-  const startListen = async () => {
-    setResult(null)
-    recorder.clear()
-    const micOk = await recorder.start()
-    if (micOk) start()
-  }
-
-  // Dừng nói: dừng thu âm trước, rồi dừng nhận dạng
-  const stopListening = () => {
-    recorder.stop()
-    stop()
   }
 
   const toggleMode = (m) => {
@@ -116,7 +112,7 @@ export default function Speaking() {
 
       {mode === 'word' && (
         <LevelTabs
-          levels={[1, 2, 3, 4]}
+          levels={HSK_LEVELS}
           active={level ?? 1}
           onChange={(l) => {
             setLevel(l)
@@ -171,7 +167,7 @@ export default function Speaking() {
                   onClick={listening ? stopListening : startListen}
                   disabled={!recOk}
                 >
-                  {listening ? '⏹ Đang nghe…' : '🎤 Bắt đầu nói'}
+                  {listening ? '⏹ Dừng nói' : '🎤 Bắt đầu nói'}
                 </button>
               )}
             </div>

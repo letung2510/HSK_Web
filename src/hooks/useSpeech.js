@@ -12,6 +12,14 @@ function loadVoices() {
   return voices
 }
 
+// URL phát âm chuẩn từ Google Translate TTS (giọng đọc từ điển tiếng Quan Thoại)
+function googleTtsUrl(text) {
+  return (
+    'https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=zh-CN&q=' +
+    encodeURIComponent(text)
+  )
+}
+
 export function useSpeech() {
   const [supported] = useState(() => 'speechSynthesis' in window)
   const [speaking, setSpeaking] = useState(false)
@@ -27,7 +35,8 @@ export function useSpeech() {
     }
   }, [supported])
 
-  const speak = useCallback(
+  // Phát bằng Web Speech API của trình duyệt (dự phòng)
+  const speakBrowser = useCallback(
     (text) => {
       if (!supported || !text) return
       const synth = window.speechSynthesis
@@ -46,6 +55,31 @@ export function useSpeech() {
       synth.speak(utter)
     },
     [supported],
+  )
+
+  const speak = useCallback(
+    (text) => {
+      if (!text) return
+      // Ưu tiên giọng Google TTS chuẩn
+      if (typeof Audio !== 'undefined') {
+        try {
+          const audio = new Audio(googleTtsUrl(text))
+          audio.onplaying = () => setSpeaking(true)
+          audio.onended = () => setSpeaking(false)
+          audio.onerror = () => {
+            setSpeaking(false)
+            // Fallback: giọng trình duyệt nếu Google TTS lỗi
+            speakBrowser(text)
+          }
+          audio.play()
+          return
+        } catch {
+          // rơi xuống fallback
+        }
+      }
+      speakBrowser(text)
+    },
+    [speakBrowser],
   )
 
   return { supported, speaking, speak }

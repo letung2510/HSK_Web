@@ -3,6 +3,9 @@ import grammar from '../data/grammar.json'
 import LevelTabs from '../components/LevelTabs'
 import AudioButton from '../components/AudioButton'
 
+// Dữ liệu ngữ pháp hiện có chỉ tới HSK 4
+const GRAMMAR_LEVELS = [1, 2, 3, 4]
+
 export default function Grammar() {
   const [level, setLevel] = useState(1)
   const [selectedId, setSelectedId] = useState(null)
@@ -17,7 +20,7 @@ export default function Grammar() {
     <div className="page grammar-page">
       <h2>Ngữ pháp HSK 1-4</h2>
       <LevelTabs
-        levels={[1, 2, 3, 4]}
+        levels={GRAMMAR_LEVELS}
         active={level}
         onChange={(l) => {
           setLevel(l)

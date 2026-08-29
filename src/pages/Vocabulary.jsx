@@ -3,6 +3,7 @@ import vocabulary from '../data/vocabulary.json'
 import LevelTabs from '../components/LevelTabs'
 import SearchBar from '../components/SearchBar'
 import WordCard from '../components/WordCard'
+import { HSK_LEVELS } from '../utils/levels'
 
 const PAGE_SIZE = 50
 
@@ -35,9 +36,9 @@ export default function Vocabulary() {
 
   return (
     <div className="page">
-      <h2>Từ vựng HSK 1-4</h2>
+      <h2>Từ vựng HSK 1-9</h2>
       <LevelTabs
-        levels={[1, 2, 3, 4]}
+        levels={HSK_LEVELS}
         active={level}
         onChange={(l) => {
           setLevel(l)
