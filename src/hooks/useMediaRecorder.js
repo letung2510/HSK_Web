@@ -21,7 +21,7 @@ export function useMediaRecorder() {
   }, [])
 
   const start = useCallback(async () => {
-    if (!supported) return
+    if (!supported) return false
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
       streamRef.current = stream
@@ -41,8 +41,10 @@ export function useMediaRecorder() {
       }
       rec.start()
       setRecording(true)
+      return true
     } catch {
       // người dùng từ chối quyền mic hoặc lỗi khác — bỏ qua, vẫn dùng recognition
+      return false
     }
   }, [supported])
 

@@ -67,12 +67,12 @@ export default function Speaking() {
     else pickPhrase()
   }
 
-  // Bắt đầu nói: vừa thu âm mic vừa nhận dạng giọng nói
-  const startListen = () => {
+  // Bắt đầu nói: thu âm mic trước, sau đó mới nhận dạng giọng nói
+  const startListen = async () => {
     setResult(null)
     recorder.clear()
-    recorder.start()
-    start()
+    const micOk = await recorder.start()
+    if (micOk) start()
   }
 
   // Dừng nói: dừng nhận dạng (kết quả về qua onResult) + dừng thu âm
@@ -177,6 +177,21 @@ export default function Speaking() {
             </div>
             {listening && <div className="listening-hint">Đang lắng nghe… hãy đọc từ này</div>}
             {error && <div className="speaking-error">Lỗi: {error}</div>}
+            {recorder.audioUrl && (
+              <div className="recording-ready">
+                <button
+                  type="button"
+                  className="btn btn-playback"
+                  onClick={() => {
+                    const audio = new Audio(recorder.audioUrl)
+                    audio.play()
+                  }}
+                >
+                  🎙️ Nghe phát âm của bạn
+                </button>
+                <span>Đã thu xong — bấm để nghe lại giọng của bạn</span>
+              </div>
+            )}
           </div>
 
           {result && (
