@@ -8,8 +8,8 @@ const TEMP = process.env.TEMP
 const OLD = 'src/data/grammar.json'
 const OUT = 'src/data/grammar.json'
 
-// Đọc dữ liệu cũ
-const oldGrammar = JSON.parse(readFileSync(OLD, 'utf8'))
+// Đọc dữ liệu cũ — chỉ lấy các điểm không phải hsk30 (idempotent: chạy lại không nhân đôi)
+const oldGrammar = JSON.parse(readFileSync(OLD, 'utf8')).filter((g) => g.source !== 'hsk30')
 
 // Đọc dữ liệu mới từng cấp
 const LEVEL_FILES = [
@@ -34,6 +34,45 @@ const CATEGORY_VI = {
   复句: 'Câu phức',
   固定格式: 'Khuôn mẫu cố định',
   修辞手法: 'Biện pháp tu từ',
+  '语段（句群）': 'Đoạn văn (cụm câu)',
+}
+
+// Map tiếng Việt cho các danh mục phụ (thuật ngữ ngữ pháp)
+const SUBCATEGORY_VI = {
+  前缀: 'Tiền tố',
+  后缀: 'Hậu tố',
+  类前缀: 'Tiền tố loại',
+  类后缀: 'Hậu tố loại',
+  名词: 'Danh từ',
+  动词: 'Động từ',
+  形容词: 'Tính từ',
+  代词: 'Đại từ',
+  数词: 'Số từ',
+  量词: 'Lượng từ',
+  副词: 'Phó từ',
+  介词: 'Giới từ',
+  连词: 'Liên từ',
+  助词: 'Trợ từ',
+  叹词: 'Thán từ',
+  结构类型: 'Loại cấu trúc',
+  功能类型: 'Loại chức năng',
+  主语: 'Chủ ngữ',
+  谓语: 'Vị ngữ',
+  宾语: 'Tân ngữ',
+  定语: 'Định ngữ',
+  状语: 'Trạng ngữ',
+  补语: 'Bổ ngữ',
+  句型: 'Kiểu câu',
+  句类: 'Loại câu',
+  特殊句型: 'Kiểu câu đặc biệt',
+  特殊句式: 'Cấu trúc câu đặc biệt',
+  复句: 'Câu phức',
+  简单复句: 'Câu phức đơn giản',
+  多重复句: 'Câu phức nhiều tầng',
+  固定短语: 'Cụm từ cố định',
+  数的表达法: 'Cách biểu đạt số',
+  数的表示法: 'Cách biểu đạt số',
+  时间表示法: 'Cách biểu đạt thời gian',
 }
 
 const newItems = []
@@ -49,6 +88,7 @@ for (const [file, level] of LEVEL_FILES) {
     // title: 语法内容 + (细目) nếu có
     const title = detail ? `${content}（${detail}）` : content
     idCounter++
+    const subVi = SUBCATEGORY_VI[sub] || sub
     newItems.push({
       id: `hsk${level}-${String(idCounter).padStart(3, '0')}`,
       hsk: level,
@@ -56,8 +96,9 @@ for (const [file, level] of LEVEL_FILES) {
       category,
       categoryVi: CATEGORY_VI[category] || category,
       subcategory: sub,
+      subcategoryVi: subVi,
       structure: detail || sub,
-      explanation: `Danh mục: ${CATEGORY_VI[category] || category} — ${sub}`,
+      explanation: `Danh mục: ${CATEGORY_VI[category] || category} — ${subVi}`,
       content,
       examples: [],
       note: '',

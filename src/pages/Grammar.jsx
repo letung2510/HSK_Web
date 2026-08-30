@@ -60,7 +60,7 @@ export default function Grammar() {
             {selected.categoryVi && (
               <div className="grammar-meta">
                 {selected.categoryVi}
-                {selected.subcategory ? ` · ${selected.subcategory}` : ''}
+                {selected.subcategoryVi ? ` · ${selected.subcategoryVi}` : ''}
               </div>
             )}
             {selected.structure && <div className="structure">{selected.structure}</div>}
