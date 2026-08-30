@@ -71,7 +71,7 @@ export default function Home() {
         </Link>
         <Link to="/grammar" className="feature-card">
           <h3>📚 Ngữ pháp</h3>
-          <p>{grammarCount} chủ điểm từ cơ bản đến trung cấp, kèm ví dụ.</p>
+          <p>{grammarCount} chủ điểm từ cơ bản đến nâng cao, kèm ví dụ.</p>
         </Link>
       </section>
     </div>

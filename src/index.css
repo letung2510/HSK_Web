@@ -478,6 +478,25 @@ body {
   color: #fff;
 }
 
+.grammar-group {
+  margin-bottom: 4px;
+}
+
+.grammar-group-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  padding: 8px 12px 4px;
+}
+
+.grammar-meta {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
 .grammar-detail {
   padding: 20px;
   background: var(--surface);
