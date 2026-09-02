@@ -31,3 +31,4 @@ scripts/.cache/
 
 # Thư mục cấu hình cục bộ của tool hỗ trợ
 .commandcode/
+.commandcoderules.md
