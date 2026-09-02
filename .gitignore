@@ -26,5 +26,8 @@ public/scripts/complete.json
 *.sln
 *.sw?
 
-# Command Code tooling
+# Cache dữ liệu nguồn + checkpoint dịch thuật của scripts (không deploy)
+scripts/.cache/
+
+# Thư mục cấu hình cục bộ của tool hỗ trợ
 .commandcode/

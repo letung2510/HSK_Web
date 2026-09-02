@@ -4,8 +4,10 @@
 //   - Mặc định dịch tối đa 950 từ/lần chạy (chừa quota an toàn)
 //   - Chạy lại nhiều lần trong nhiều ngày để dịch dần toàn bộ
 import { readFileSync, writeFileSync, existsSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 
-const SCRATCH = 'C:/Users/Hp/AppData/Local/Temp/commandcode/C--Users-Hp-hsk-web/353dd39c-151d-48c9-b312-5258909bc118/scratchpad'
+// Thư mục cache cục bộ (git-ignored) chứa checkpoint dịch thuật
+const SCRATCH = fileURLToPath(new URL('.cache', import.meta.url))
 const OUT = 'src/data/vocabulary.json'
 const CHECKPOINT = `${SCRATCH}/vi-mymemory.json`
 

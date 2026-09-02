@@ -7,8 +7,10 @@
 //   1. node scripts/build-vocabulary.mjs prep    → tạo defs-to-translate.json (không bắt buộc)
 //   2. node scripts/build-vocabulary.mjs build   → tạo src/data/vocabulary.json
 import { readFileSync, writeFileSync, existsSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
 
-const SCRATCH = 'C:/Users/Hp/AppData/Local/Temp/commandcode/C--Users-Hp-hsk-web/353dd39c-151d-48c9-b312-5258909bc118/scratchpad'
+// Thư mục cache cục bộ (git-ignored) chứa dữ liệu nguồn + checkpoint dịch thuật
+const SCRATCH = fileURLToPath(new URL('.cache', import.meta.url))
 const TSV = `${SCRATCH}/hsk_word_list.tsv`
 const OUT = 'src/data/vocabulary.json'
 const OLD_VOCAB = 'src/data/vocabulary.old.json'

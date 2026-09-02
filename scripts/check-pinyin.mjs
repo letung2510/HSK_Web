@@ -45,7 +45,9 @@ for (const m of sorted.slice(0, 60)) {
 
 // Lưu đầy đủ để xử lý
 import { writeFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
+const OUT_DIR = fileURLToPath(new URL('.cache', import.meta.url))
 writeFileSync(
-  'C:/Users/Hp/AppData/Local/Temp/commandcode/C--Users-Hp/3accb13f-7c52-4828-a01e-2947a784322b/scratchpad/pinyin-mismatches.json',
+  `${OUT_DIR}/pinyin-mismatches.json`,
   JSON.stringify(sorted, null, 2),
 )
